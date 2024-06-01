@@ -6,4 +6,4 @@
 
 
 
--i am a beginer in java so i build this project to improve my java skill without library.
+-i am a beginner in java so i build this project to improve my java skill without library.

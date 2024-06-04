@@ -57,15 +57,7 @@ public class Controller {
 		return matrix;
 	}
 
-	public int[][] subOrInvSubByte(int rows, int colums, String[][] matrix, int[][] S_BOX, int[][] arr) { // so hang cua
-																											// ma tran,
-																											// so cot
-																											// cua ma
-																											// tran ,
-																											// mang
-																											// String tu
-																											// controller.matrix,
-																											// S_BOX
+	public int[][] subOrInvSubByte(int rows, int colums, String[][] matrix, int[][] S_BOX, int[][] arr) {
 		int[][] res = new int[rows][colums];
 		Model m = new Model();
 		for (int i = 0; i < rows; i++) {
@@ -166,18 +158,11 @@ public class Controller {
 			case 0x09:// = A.H02.H02.H02 + A.H01
 				return this.bitToInt(this.XOR(this.golois2(this.golois2(this.golois2(b))), b));
 			case 0x0B:// = A.H02.H02.H02 + A.H02 + A.H01
-				return this.bitToInt(this
-						.XOR(this.bitToInt(this.XOR(this.golois2(this.golois2(this.golois2(b))), this.golois2(b))), b));
+				return this.bitToInt(this.XOR(this.bitToInt(this.XOR(this.golois2(this.golois2(this.golois2(b))), this.golois2(b))), b));
 			case 0x0D: // A.H02.H02.H02 + A.H02.H02 + A.H01
-				return this.bitToInt(this.XOR(
-						this.bitToInt(
-								this.XOR(this.golois2(this.golois2(this.golois2(b))), this.golois2(this.golois2(b)))),
-						b));
+				return this.bitToInt(this.XOR(this.bitToInt(this.XOR(this.golois2(this.golois2(this.golois2(b))), this.golois2(this.golois2(b)))),b));
 			case 0x0E: // A.H02.H02.H02 + A.H02.H02 + A.H02
-				return this.bitToInt(this.XOR(
-						this.bitToInt(
-								this.XOR(this.golois2(this.golois2(this.golois2(b))), this.golois2(this.golois2(b)))),
-						this.golois2(b)));
+				return this.bitToInt(this.XOR(this.bitToInt(this.XOR(this.golois2(this.golois2(this.golois2(b))), this.golois2(this.golois2(b)))),this.golois2(b)));
 			default:
 				return 0;
 		}
@@ -185,8 +170,7 @@ public class Controller {
 
 	public int bitToInt(String a) {
 		Model m = new Model();
-		return m.convertHexToInt(m.binaryToHex(a.substring(0, 4))) * 16
-				+ m.convertHexToInt(m.binaryToHex(a.substring(4, 8)));
+		return m.convertHexToInt(m.binaryToHex(a.substring(0, 4))) * 16+ m.convertHexToInt(m.binaryToHex(a.substring(4, 8)));
 	}
 
 	public String XOR(int a, int b) {
@@ -244,13 +228,10 @@ public class Controller {
 	public void addRoundKey(String[][] mixedMatrix, String[][] matrixKey, String[][] addedMatrix) {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
-				if (this.bitToInt(this.XOR(Integer.parseInt(mixedMatrix[i][j], 16),
-						Integer.parseInt(matrixKey[i][j], 16))) > 15) {
-					addedMatrix[i][j] = Integer.toHexString(this.bitToInt(
-							this.XOR(Integer.parseInt(mixedMatrix[i][j], 16), Integer.parseInt(matrixKey[i][j], 16))));
+				if (this.bitToInt(this.XOR(Integer.parseInt(mixedMatrix[i][j], 16),Integer.parseInt(matrixKey[i][j], 16))) > 15) {
+					addedMatrix[i][j] = Integer.toHexString(this.bitToInt(this.XOR(Integer.parseInt(mixedMatrix[i][j], 16), Integer.parseInt(matrixKey[i][j], 16))));
 				} else {
-					addedMatrix[i][j] = "0" + Integer.toHexString(this.bitToInt(
-							this.XOR(Integer.parseInt(mixedMatrix[i][j], 16), Integer.parseInt(matrixKey[i][j], 16))));
+					addedMatrix[i][j] = "0" + Integer.toHexString(this.bitToInt(this.XOR(Integer.parseInt(mixedMatrix[i][j], 16), Integer.parseInt(matrixKey[i][j], 16))));
 				}
 			}
 		}
@@ -262,19 +243,14 @@ public class Controller {
 		String res = "";
 		for (int i = 0; i < s.length(); i += 2) {
 			String oneByte = s.substring(i, i + 2);
-			if (Integer.toHexString(S_BOX[m.convertHexToInt(oneByte.charAt(0))][m.convertHexToInt(oneByte.charAt(1))])
-					.length() == 0) {
+			if (Integer.toHexString(S_BOX[m.convertHexToInt(oneByte.charAt(0))][m.convertHexToInt(oneByte.charAt(1))]).length() == 0) {
 				res += "00";
 			} else {
-				if (Integer
-						.toHexString(S_BOX[m.convertHexToInt(oneByte.charAt(0))][m.convertHexToInt(oneByte.charAt(1))])
-						.length() == 1) {
+				if (Integer.toHexString(S_BOX[m.convertHexToInt(oneByte.charAt(0))][m.convertHexToInt(oneByte.charAt(1))]).length() == 1) {
 					res += "0";
-					res += Integer.toHexString(
-							S_BOX[m.convertHexToInt(oneByte.charAt(0))][m.convertHexToInt(oneByte.charAt(1))]);
+					res += Integer.toHexString(S_BOX[m.convertHexToInt(oneByte.charAt(0))][m.convertHexToInt(oneByte.charAt(1))]);
 				} else {
-					res += Integer.toHexString(
-							S_BOX[m.convertHexToInt(oneByte.charAt(0))][m.convertHexToInt(oneByte.charAt(1))]);
+					res += Integer.toHexString(S_BOX[m.convertHexToInt(oneByte.charAt(0))][m.convertHexToInt(oneByte.charAt(1))]);
 				}
 			}
 		}
